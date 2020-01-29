@@ -12,7 +12,7 @@ For the first milestone see http://folk.uio.no/hansw/AST5220/notes/milestone1.ht
 
 Compile the code running [ make ]. If you want to compile this on your computer you need to install the GSL library first. See below for instructions.
 
-If you get it compiled then run it ./cmb It will crash with "Spline eta has not been created". That is fine, its one of your task to implement this.
+If you get it compiled then run it as ( ./cmb ) It will crash with "Spline eta has not been created". That is fine, its one of your task to implement this.
 
 See Examples.cpp, run the examples as ( make examples; ./examples ; ), for examples on how to make splines, solve ODEs, etc.
 and the functionality of the stuff supplied with this template
@@ -32,35 +32,35 @@ INSTALL GSL LOCALLY:
 
 Run the following commands in order:
 
-# Go the the home directory
+- Go the the home directory
 cd $HOME
 
-# Make a local folder to hold libraries
+- Make a local folder to hold libraries
 mkdir local
 
-# Enter this directory
+- Enter this directory
 cd local
 
-# Download the code (if you don't have wget you need to get the file to this dir by other means)
+- Download the code (if you don't have wget you need to get the file to this dir by other means)
 wget ftp://ftp.gnu.org/gnu/gsl/gsl-2.6.tar.gz
 
-# Unzip the code
+- Unzip the code
 tar -xvf gsl-2.6.tar.gz
 
-# You should now have the gsl-2.6 folder. Enter it
+- You should now have the gsl-2.6 folder. Enter it
 cd gsl-2.6
 
-# Run the configure script
+- Run the configure script
 ./configure --prefix=$HOME/local
 
-# Compile and install it
+- Compile and install it
 make ; make install
 
-# In the CMB code Makefile change the include and lib paths to point to the library:
+- In the CMB code Makefile change the include and lib paths to point to the library:
 INC  = -I$(HOME)/local/include
 LIBS = -L$(HOME)/local/lib -lgsl -lgslcblas
 
-# If this fails with "libgsl.so not found" then run the command
+- If this fails with "libgsl.so not found" then run the command
 export LD\_LIBRARY\_PATH="$LD\_LIBRARY\_PATH:$HOME/local/lib"
 
 and try to run ./cmb again and it should work. To avoid having
@@ -72,7 +72,7 @@ and it will load everytime you open a new window
 INSTALL COMPLEX BESSEL LOCALLY:
 ---
 
-# Download the source
+- Download the source
 cd $HOME
 mkdir local
 cd local
