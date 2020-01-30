@@ -16,7 +16,7 @@
 // The constants used in this code. Everything is here in SI units
 extern struct ConstantsAndUnits {
   // Basic units (here we use SI)
-  const double m           = 1.0;			                    // Length (in meters)
+  const double m           = 1.0;                         // Length (in meters)
   const double s           = 1.0;                         // Time (in seconds)
   const double kg          = 1.0;                         // Kilo (in kilos)
   const double K           = 1.0;                         // Temperature (in Kelvins)
@@ -26,22 +26,22 @@ extern struct ConstantsAndUnits {
   const double N           = kg*m/(s*s);                  // Newton
   const double J           = N*m;                         // Joule
   const double W           = J/s;                         // Watt
-  const double Mpc         = 3.08567758e22 * m;		        // Megaparsec
-  const double eV          = 1.60217653e-19 * J;		      // Electronvolt
+  const double Mpc         = 3.08567758e22 * m;           // Megaparsec
+  const double eV          = 1.60217653e-19 * J;          // Electronvolt
   
   // Physical constants    
-  const double k_b         = 1.38064852e-23 * J/K;	      // Bolzmanns constant
-  const double m_e         = 9.10938356e-31 * kg;	        // Mass of electron
-  const double m_H         = 1.6735575e-27 * kg;	        // Mass of hydrogen atom
-  const double c           = 2.99792458e8 * m/s;	        // Speed of light
-  const double G           = 6.67430e-11 * N*m*m/(kg*kg);	// Gravitational constant
-  const double hbar        = 1.054571817e-34 * J*s;		    // Reduced Plancks constant
-  const double sigma_T     = 6.6524587158e-29 * m*m;		  // Thomas scattering cross-section
+  const double k_b         = 1.38064852e-23 * J/K;        // Bolzmanns constant
+  const double m_e         = 9.10938356e-31 * kg;         // Mass of electron
+  const double m_H         = 1.6735575e-27 * kg;          // Mass of hydrogen atom
+  const double c           = 2.99792458e8 * m/s;          // Speed of light
+  const double G           = 6.67430e-11 * N*m*m/(kg*kg); // Gravitational constant
+  const double hbar        = 1.054571817e-34 * J*s;       // Reduced Plancks constant
+  const double sigma_T     = 6.6524587158e-29 * m*m;      // Thomas scattering cross-section
   const double lambda_2s1s = 8.227 / s;                   // Transition time between 2s and 1s in Hydrogen
   const double H0_over_h   = 100 * km/s/Mpc;              // H0 / h
-  const double epsilon_0   = 13.605693122994 * eV;	      // Ionization energy for the ground state of hydrogen
-  const double xhi0        = 24.587387 * eV;			        // Ionization energy for neutral Helium
-  const double xhi1        = 4.0 * epsilon_0;		          // Ionization energy for singly ionized Helium
+  const double epsilon_0   = 13.605693122994 * eV;        // Ionization energy for the ground state of hydrogen
+  const double xhi0        = 24.587387 * eV;              // Ionization energy for neutral Helium
+  const double xhi1        = 4.0 * epsilon_0;             // Ionization energy for singly ionized Helium
   
   // Min and max k-value
   const double k_min = 0.00005 / Mpc;
