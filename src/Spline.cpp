@@ -407,7 +407,7 @@ double Spline2D::eval(const double x, const double y) const{
   gsl_interp_accel *yacc_thread = yaccs[omp_get_thread_num()];
 #else
   gsl_interp_accel *xacc_thread = xacc;
-  gsl_interp_accel *yacc_thread = xacc;
+  gsl_interp_accel *yacc_thread = yacc;
 #endif
   return gsl_spline2d_eval(spline, xx, yy, xacc_thread, yacc_thread);
 }
@@ -444,7 +444,7 @@ double Spline2D::eval_deriv(
   gsl_interp_accel *yacc_thread = yaccs[omp_get_thread_num()];
 #else
   gsl_interp_accel *xacc_thread = xacc;
-  gsl_interp_accel *yacc_thread = xacc;
+  gsl_interp_accel *yacc_thread = yacc;
 #endif
 
   return derivfunc[n](spline, xx, yy, xacc_thread, yacc_thread); 
