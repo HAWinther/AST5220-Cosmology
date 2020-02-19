@@ -5,7 +5,7 @@
 // Example for how to create and use a 1D spline
 //================================================
 
-void make_spline(){
+void example_make_spline_basic(){
 
   const double xmin = 0.0;
   const double xmax = 1.0;
@@ -14,7 +14,8 @@ void make_spline(){
   Vector x_array = Utils::linspace(xmin, xmax, npts);
   Vector y_array = exp(x_array);
 
-  Spline f_spline(x_array, y_array, "Function y = exp(x)");
+  Spline f_spline;
+  f_spline.create(x_array, y_array, "Function y = exp(x)");
 
   std::cout << "e^log(2) = " << f_spline( log(2) ) << "\n";
 }
@@ -46,7 +47,8 @@ void example_make_spline(){
     y_array[i] = func(x_array[i]);
 
   // Make the spline
-  Spline f_spline(x_array, y_array, "Test Spline");
+  Spline f_spline;
+  f_spline.create(x_array, y_array, "Test Spline");
 
   // Check that it gives OK results
   std::cout << "Example getting function values from a spline\n";
@@ -192,6 +194,45 @@ void example_make_2D_spline(){
 //================================================
 // Example for how to solve an ODE
 //================================================
+
+void example_single_ODE(){
+
+  //=================================================================
+  //=================================================================
+
+  // The range [xmin, xmax] to solve the ODE over and an array
+  // of x-values for which we store the solution on
+  const double xmin = 0.0;
+  const double xmax = 2.0*M_PI;
+  const int    npts = 10;
+  Vector x_array = Utils::linspace(xmin, xmax, npts);
+
+  // The ODE y' = 2*x (solution is x^2)
+  ODEFunction dydx = [&](double x, const double *y, double *dydx){
+    dydx[0] = 2.0*x;
+    return GSL_SUCCESS;
+  };
+
+  // Set the IC (with the given IC the solution is y(x) = x^2
+  double yini = 0.0;
+  Vector y_ic{yini};
+
+  // Solve the ODE
+  ODESolver ode;
+  ode.solve(dydx, x_array, y_ic);
+
+  // Get the solution (we only have one component so index 0 holds the solution)
+  auto y_array = ode.get_data_by_component(0);
+
+  // Output the result and compare to analytical result
+  std::cout << "Example solving an ODE and comparing to analytical result\n";
+  for(int i = 0; i < x_array.size(); i++){
+    std::cout << " xi          = " << std::setw(10) << x_array[i];
+    std::cout << " y(xi)       = " << std::setw(10) << y_array[i];
+    std::cout << " y_exact(xi) = " << std::setw(10) << x_array[i]*x_array[i] << "\n";
+  }
+}
+
 
 void example_solve_coupled_ODE(){
 
@@ -343,7 +384,13 @@ void other_stuff(){
 
 int main(int argc, char **argv){
   std::cout << "\n==============================\n\n";
+  example_make_spline_basic();
+  
+  std::cout << "\n==============================\n\n";
   example_make_spline();
+  
+  std::cout << "\n==============================\n\n";
+  example_single_ODE();
   
   std::cout << "\n==============================\n\n";
   example_solve_coupled_ODE();

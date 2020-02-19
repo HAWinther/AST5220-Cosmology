@@ -32,28 +32,29 @@ OPTIONS += -D_SPLINE_WARNINGS_ON
 # LIBS += -lgfortran -lcomplex_bessel
 #=======================================================
 
-C = -O3 $(OPTIONS)
+C = -O3 -g $(OPTIONS)
 
 #=======================================================
 
+VPATH=src/
 TARGETS := cmb
 all: $(TARGETS)
 
 # OBJECT FILES
-OBJS = src/Main.o src/Utils.o src/BackgroundCosmology.o src/RecombinationHistory.o src/Perturbations.o src/PowerSpectrum.o src/Spline.o src/ODESolver.o
+OBJS = Main.o Utils.o BackgroundCosmology.o RecombinationHistory.o Perturbations.o PowerSpectrum.o Spline.o ODESolver.o
 
 # DEPENDENCIES
-Main.o		              : src/BackgroundCosmology.h src/RecombinationHistory.h src/Perturbations.h src/PowerSpectrum.h
+Main.o                  : BackgroundCosmology.h RecombinationHistory.h Perturbations.h PowerSpectrum.h
 Spline.o                : Spline.h
 ODESolver.o             : ODESolver.h
 Utils.o                 : Utils.h Spline.h ODESolver.h
-BackgroundCosmology.o		: BackgroundCosmology.h Utils.h Spline.h ODESolver.h
+BackgroundCosmology.o   : BackgroundCosmology.h Utils.h Spline.h ODESolver.h
 RecombinationHistory.o  : RecombinationHistory.h BackgroundCosmology.h
 Perturbations.o         : Perturbations.h BackgroundCosmology.h RecombinationHistory.h
 PowerSpectrum.o         : PowerSpectrum.h BackgroundCosmology.h RecombinationHistory.h Perturbations.h
 Examples.o              : Utils.h Spline.h ODESolver.h
 
-examples: src/Examples.o src/Utils.o src/Spline.o src/ODESolver.o
+examples: Examples.o Utils.o Spline.o ODESolver.o
 	${CC} -o $@ $^ $C $(INC) $(LIBS)
 
 cmb: $(OBJS)
@@ -63,5 +64,5 @@ cmb: $(OBJS)
 	${CC}  -c -o $@ $< $C $(INC) 
 
 clean:
-	rm -rf $(TARGETS) src/*.o
+	rm -rf $(TARGETS) *.o
 
