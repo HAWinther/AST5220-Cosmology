@@ -118,7 +118,7 @@ void Perturbations::integrate_perturbations(){
     //...
 
   }
-  Utils::StartTiming("integrateperturbation");
+  Utils::EndTiming("integrateperturbation");
 
   //=============================================================================
   // TODO: Make all splines needed: Theta0,Theta1,Theta2,Phi,Psi,...
