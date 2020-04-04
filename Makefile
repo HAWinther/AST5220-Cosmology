@@ -2,7 +2,7 @@
 
 SHELL := /bin/bash
 
-# Set compiler
+# Set compiler (use =c++17 if you have this availiable)
 CC = g++ -std=c++11 
 
 # Paths to GSL library
@@ -27,9 +27,6 @@ OPTIONS += -D_SPLINE_WARNINGS_ON
 # OPTIONS += -D_USEOPEMP
 # CC += -fopenmp
 
-# Add bessel function library (otherwise use the GSL one)
-# OPTIONS += -D_COMPLEX_BESSEL
-# LIBS += -lgfortran -lcomplex_bessel
 #=======================================================
 
 C = -O3 -g $(OPTIONS)

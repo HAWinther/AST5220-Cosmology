@@ -150,16 +150,23 @@ namespace Utils{
   // Function to get the spherical Bessel function j_n(x)
   double j_ell(const int n, const double x){
     if(x==0.0) return n == 0 ? 1.0 : 0.0;
-#ifdef _COMPLEX_BESSEL
-    return sp_bessel::besselJ(n+0.5, x).real() * sqrt(M_PI/(2.0*x));
+
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || (__cplusplus >= 201703L))
+    // If you have a c++17 compiler you can use this
+    return std::sph_bessel(n, x);
 #else
+    // Otherwise lets use GSL with approximation for x << n to prevent 
+    // underflow issues in that implementation for large n and small x
+    if(n > 100 && x < 0.2 * n) return 0.0;
     return gsl_sf_bessel_jl(n, x);
 #endif
   }
   double J_n(const int n, const double x){
-#ifdef _COMPLEX_BESSEL
-    return sp_bessel::besselJ(n, x).real();
+#if ((defined(_MSVC_LANG) && _MSVC_LANG >= 201703L) || (__cplusplus >= 201703L))
+    // If you have a c++17 compiler you can use this
+    return std::cyl_bessel(n, x);
 #else
+    if(n > 100 && x < 0.2 * n) return 0.0;
     return gsl_sf_bessel_Jn(n, x);
 #endif
   }

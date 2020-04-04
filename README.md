@@ -1,5 +1,5 @@
 # Cosmology II
-## The large scale structures of our Universe in theory and practice
+## The Cosmic Microwave Background and the Large Scale Structure of our Universe in theory and practice
 
 This repository contains C++ templates for making an Einstein-Boltzmann solver (a CAMB like code). This is used for the course AST5220 "Cosmology II" at ITA University of Oslo. The aim of this course is for students to learn both the theory, the physics and the numerics. We derive all the equations and discuss the physics in the lectures and then the students have to implement and solve them in a numerical code that will ultimately lead to matter and CMB power spectra.
 
@@ -15,7 +15,7 @@ The code runs from Main.cpp and then proceeds to go through the different milest
 
 See Examples.cpp - and run the examples as [ make examples; ./examples ; ] - for examples on how to make splines, solve ODEs and the functionality of the stuff supplied with this template.
 
-In the last module you will also need a library for Bessel functions (the GSL one often fails for very large arguments and orders), if COMPLEX\_BESSEL is defined in the makefile then you will have to have the [Complex Bessel](https://github.com/joeydumont/complex_bessel) library installed (only relevant for the final milestone).
+For the last milestone you need to compute spherical bessel functions (see the function j\_ell(n, x) in Utils.cpp). There are several options for this: if you have a C++17 compiler (use -std=c++17 instead of c++11 in the Makefile) then you can use provided by the C++ standard std::sph\_bessel(n, x). The GSL library also provides a function gsl\_sf\_bessel\_jl(n, x) for this. This implementation has problems with underflow for small x and large n, but we can correct this using known asymptotical expressions. The last option is to use another library. If none of these works for you then try the [Complex Bessel](https://github.com/joeydumont/complex_bessel) library.
 
 # How to install GSL
 
@@ -66,20 +66,4 @@ and try to run ./cmb again and it should work. To avoid having
 to run this command every time you open a new terminal open
 the $HOME/.bashrc file and add this line to the end of the file
 and it will load everytime you open a new window.
-
-# Install Complex Bessel
-
-- Download the source
-
-cd $HOME
-
-mkdir local
-
-cd local
-
-git clone https://github.com/joeydumont/complex_bessel
-
-cd complex\_bessel
-
-See the README.md file in this directory for how to proceed.
 
