@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv){
   Utils::StartTiming("Everything");
-  
+
   //=========================================================================
   // Parameters
   //=========================================================================
@@ -62,7 +62,7 @@ int main(int argc, char **argv){
   pert.info();
   
   // Output perturbation quantities
-  double kvalue = 0.01 * Constants.Mpc;
+  double kvalue = 0.01 / Constants.Mpc;
   pert.output(kvalue, "perturbations_k0.01.txt");
   
   // Remove when module is completed
