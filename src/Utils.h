@@ -100,7 +100,7 @@ namespace Utils {
   double J_n(const int n, const double x);
   
   // Spherical bessel functions
-  double j_ell(const int n, const double x);
+  double j_ell(const int ell, const double x);
   std::vector<double> j_ell_array(const int lmax, const double x);
   
   // Generate an array with n equispaced points from xmin to xmax
