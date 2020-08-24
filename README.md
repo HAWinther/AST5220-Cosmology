@@ -1,11 +1,20 @@
 # Cosmology II
 ## The Cosmic Microwave Background and the Large Scale Structure of our Universe in theory and practice
 
-This repository contains C++ templates for making an Einstein-Boltzmann solver (a CAMB like code). This is used for the course AST5220 "Cosmology II" at ITA University of Oslo. The aim of this course is for students to learn both the theory, the physics and the numerics. We derive all the equations and discuss the physics in the lectures and then the students have to implement and solve them in a numerical code that will ultimately lead to matter and CMB power spectra.
+This repository contains C++ templates for making an Einstein-Boltzmann solver (a CAMB like code). This is used for the course AST5220 "Cosmology II" at ITA University of Oslo. The aim of this course is for students to learn both the theory, the physics and the numerics. We derive all the equations and discuss the physics in the lectures and then the students have to implement and solve them in a numerical code that will ultimately lead to matter and CMB power spectra. 
+
+For the current version of the course C++ is the main language and you are strongly reccomended to use this as I can much more easily help you out and most of the course website only contains information for this C++ template. However you are free to do this project in any language you want (and you don't even have to use the template we provide if you don't want to), just be aware that I'm only good at C, C++, Fortran and Python so if you do it any other language you are on your own. See below for templates in other languages: 
+
+# Fortran
+
+Templates for how to do this in Fortran (written by Hans Kristian Eriksen) can be found in the Fortran\_template directory together with PDFs outlining what to do for each milestone.
+
+# Python?
+
+Every year there is someone who absolutely wants to do it in Python and very often it ends up not going so well (though some people manage to do it extremely well). I have therefore also included some simple templates for how you could do this in Python and you can find these in python\_template. However its strongly reccomended that you do not do this in Python even if that is what you know best. First of all its extremely useful to learn a more low level language which will make you a better human being and secondly the last two milestones are going to be super slow unless you really know what you are doing and how to speed up slow parts in Python (and is willing to spend time doing this). If you just naively implement things its likely going to take 10-20 minutes for a proper run of the full code (which will be very challenging to debug). Having said all that, this is not kindergarden so make your own choice.
 
 # Website
-
-All relevant information about the project and the different milestones can be found on this [website](http://folk.uio.no/hansw/AST5220/notes/index.html).
+All relevant information about the project and the different milestones can be found on this [website](https://cmb.wintherscoming.no/).
 
 # Compiling
 
@@ -15,7 +24,7 @@ The code runs from Main.cpp and then proceeds to go through the different milest
 
 See Examples.cpp - and run the examples as [ make examples; ./examples ; ] - for examples on how to make splines, solve ODEs and the functionality of the stuff supplied with this template.
 
-For the last milestone you need to compute spherical bessel functions (see the function j\_ell(n, x) in Utils.cpp). There are several options for this: if you have a C++17 compiler (use -std=c++17 instead of c++11 in the Makefile) then you can use provided by the C++ standard std::sph\_bessel(n, x). The GSL library also provides a function gsl\_sf\_bessel\_jl(n, x) for this. This implementation has problems with underflow for small x and large n, but we can correct this using known asymptotical expressions. The last option is to use another library. If none of these works for you then try the [Complex Bessel](https://github.com/joeydumont/complex_bessel) library.
+For the last milestone you need to compute spherical bessel functions (see the function j\_ell(n, x) in Utils.cpp). There are several options for this: if you have a C++17 compiler (use -std=c++17 instead of c++11 in the Makefile) then you can use provided by the C++ standard std::sph\_bessel(n, x). Otherwise the GSL library provides a function gsl\_sf\_bessel\_jl(n, x) for this that we use in the template. This implementation has problems with underflow for small x and large n, but we correct this using known asymptotical expressions. The last option is to use another library like for example the [Complex Bessel](https://github.com/joeydumont/complex_bessel) library.
 
 # How to install GSL
 

@@ -1,0 +1,5 @@
+If you want to install it locally you need to install LAPACK (unless you already have it) 
+and edit the Makefile to point it to where you have the library installed.
+
+To get LAPACK see http://www.netlib.org/lapack/ or https://github.com/Reference-LAPACK/lapack.git
+
