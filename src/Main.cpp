@@ -7,6 +7,13 @@
 int main(int argc, char **argv){
   Utils::StartTiming("Everything");
 
+  std::cout << Constants.c << "\n";
+  std::cout << Constants.hbar << "\n";
+  std::cout << Constants.G << "\n";
+  std::cout << std::sqrt(8.0*M_PI*Constants.G) << "\n";
+  std::cout << Constants.k_b << "\n";
+  exit(1);
+
   //=========================================================================
   // Parameters
   //=========================================================================
@@ -15,7 +22,7 @@ int main(int argc, char **argv){
   double h           = 0.7;
   double OmegaB      = 0.05;
   double OmegaCDM    = 0.25;
-  double OmegaLambda = 0.7;
+  double OmegaK      = 0.0;
   double Neff        = 3.046;
   double TCMB        = 2.7255;
 
@@ -27,7 +34,7 @@ int main(int argc, char **argv){
   //=========================================================================
 
   // Set up and solve the background
-  BackgroundCosmology cosmo(h, OmegaB, OmegaCDM, OmegaLambda, Neff, TCMB);
+  BackgroundCosmology cosmo(h, OmegaB, OmegaCDM, OmegaK, Neff, TCMB);
   cosmo.solve();
   cosmo.info();
   

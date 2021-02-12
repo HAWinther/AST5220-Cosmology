@@ -38,7 +38,7 @@ class BackgroundCosmology{
         double h, 
         double OmegaB, 
         double OmegaCDM, 
-        double OmegaLambda,
+        double OmegaK,
         double Neff, 
         double TCMB
         );
@@ -70,7 +70,7 @@ class BackgroundCosmology{
     double get_H0() const;
     double get_h() const;
     double get_Neff() const;
-    double get_TCMB() const;
+    double get_TCMB(double x = 0.0) const;
 };
 
 #endif

@@ -8,19 +8,19 @@ BackgroundCosmology::BackgroundCosmology(
     double h, 
     double OmegaB, 
     double OmegaCDM, 
-    double OmegaLambda,
+    double OmegaK,
     double Neff, 
     double TCMB) :
   h(h),
   OmegaB(OmegaB),
   OmegaCDM(OmegaCDM),
-  OmegaLambda(OmegaLambda),
+  OmegaK(OmegaK),
   Neff(Neff), 
   TCMB(TCMB)
 {
 
   //=============================================================================
-  // TODO: Compute OmegaR, OmegaNu, OmegaK, H0, ...
+  // TODO: Compute OmegaR, OmegaNu, OmegaLambda, H0, ...
   //=============================================================================
   //...
   //...
@@ -204,8 +204,9 @@ double BackgroundCosmology::get_Neff() const{
   return Neff; 
 }
 
-double BackgroundCosmology::get_TCMB() const{ 
-  return TCMB; 
+double BackgroundCosmology::get_TCMB(double x) const{ 
+  if(x == 0.0) return TCMB;
+  return TCMB * exp(-x); 
 }
 
 //====================================================
