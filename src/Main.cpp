@@ -7,13 +7,6 @@
 int main(int argc, char **argv){
   Utils::StartTiming("Everything");
 
-  std::cout << Constants.c << "\n";
-  std::cout << Constants.hbar << "\n";
-  std::cout << Constants.G << "\n";
-  std::cout << std::sqrt(8.0*M_PI*Constants.G) << "\n";
-  std::cout << Constants.k_b << "\n";
-  exit(1);
-
   //=========================================================================
   // Parameters
   //=========================================================================
