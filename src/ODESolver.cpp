@@ -119,6 +119,7 @@ void ODESolver::solve(
     data[i] = y;
     derivative_data[i] = dydx;
   }
+  gsl_odeiv2_driver_free(ode_driver);
 }
 
 void ODESolver::set_verbose(bool onoff){
