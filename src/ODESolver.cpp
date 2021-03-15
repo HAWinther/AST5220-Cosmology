@@ -70,9 +70,12 @@ void ODESolver::solve(
     throw ODE_ERROR;
   }
 
+  // Are we integrating forward or backward?
+  double sign = xarr[1] > xarr[0] ? 1.0 : -1.0;
+
   // Set up the ODE system
   gsl_odeiv2_system ode_system = {ode_equation, jacobian, size_t(yinitial.size()), parameters};
-  gsl_odeiv2_driver* ode_driver = gsl_odeiv2_driver_alloc_y_new (&ode_system, stepper, hstart, abserr, relerr);
+  gsl_odeiv2_driver* ode_driver = gsl_odeiv2_driver_alloc_y_new (&ode_system, stepper, std::abs(hstart) * sign, abserr, relerr);
 
   // Initialize with the initial condition
   double x = xarr[0];
