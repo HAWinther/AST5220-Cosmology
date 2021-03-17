@@ -209,4 +209,5 @@ FUNS(exp); FUNS(log); FUNS(cos); FUNS(sin); FUNS(tan); FUNS(fabs); FUNS(atan)
 std::vector<double> pow(const std::vector<double>& x, double n) {
   std::vector<double> y(x.size());
   std::transform(x.begin(), x.end(), y.begin(), [=](double t) { return pow(t, n); } ); \
+  return y;
 }
