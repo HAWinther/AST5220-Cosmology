@@ -91,7 +91,7 @@ namespace Utils {
   
   // Find the x-value such that y(x) = y_value
   double binary_search_for_value(
-      Spline &y, 
+      const Spline &y, 
       double y_value, 
       std::pair<double,double> xrange = {0.0,0.0}, 
       double epsilon = 1e-7);

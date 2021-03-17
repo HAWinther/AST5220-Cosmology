@@ -45,7 +45,7 @@ namespace Utils{
 
   // Find a value in a spline
   double binary_search_for_value(
-      Spline &y, 
+      const Spline &y, 
       double y_value, 
       std::pair<double,double> xrange, 
       double epsilon){
@@ -184,13 +184,13 @@ namespace Utils{
 #endif
   }
 
-  // 2-point stencil with zero derivative at the end-points
+  // 2-point stencil with zero second derivative at the right end-point
   std::vector<double> derivative(std::vector<double> &x, std::vector<double> &f){
-    int n = f.size();
+    const size_t n = f.size();
     std::vector<double> derivative(n);
-    for(int i = 1; i < n-1; i++){
-      double dx   = x[i+1] - x[i];
-      derivative[i] = (f[i+1] - f[i])   / dx;
+    for(size_t i = 1; i < n-1; i++){
+      const double dx   = x[i+1] - x[i];
+      derivative[i] = (f[i+1] - f[i]) / dx;
     }
     derivative[n-1] = derivative[n-2];
     return derivative;
@@ -199,12 +199,14 @@ namespace Utils{
 
 // Be able to take common mathematical functions on a vector
 #define FUNS(FUN) \
-  struct op_##FUN { double operator() (double d) const { return FUN(d); } }; \
 std::vector<double> FUN(const std::vector<double>& x) { \
-  const int n = x.size(); \
-  std::vector<double> y(n); \
-  std::transform(x.begin(), x.end(), y.begin(), op_##FUN()); \
+  std::vector<double> y(x.size()); \
+  std::transform(x.begin(), x.end(), y.begin(), [](double t) { return FUN(t); } ); \
   return y; \
 } 
 FUNS(exp); FUNS(log); FUNS(cos); FUNS(sin); FUNS(tan); FUNS(fabs); FUNS(atan)
 #undef FUNS
+std::vector<double> pow(const std::vector<double>& x, double n) {
+  std::vector<double> y(x.size());
+  std::transform(x.begin(), x.end(), y.begin(), [=](double t) { return pow(t, n); } ); \
+}
