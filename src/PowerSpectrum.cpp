@@ -7,10 +7,16 @@
 PowerSpectrum::PowerSpectrum(
     BackgroundCosmology *cosmo, 
     RecombinationHistory *rec, 
-    Perturbations *pert) : 
+    Perturbations *pert,
+    double A_s,
+    double n_s,
+    double kpivot_mpc) : 
   cosmo(cosmo), 
   rec(rec), 
-  pert(pert)
+  pert(pert),
+  A_s(A_s),
+  n_s(n_s),
+  kpivot_mpc(kpivot_mpc)
 {}
 
 //====================================================

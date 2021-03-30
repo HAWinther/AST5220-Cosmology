@@ -12,15 +12,20 @@ int main(int argc, char **argv){
   //=========================================================================
 
   // Background parameters
-  double h           = 0.7;
+  double h           = 0.67;
   double OmegaB      = 0.05;
-  double OmegaCDM    = 0.25;
+  double OmegaCDM    = 0.267;
   double OmegaK      = 0.0;
   double Neff        = 3.046;
   double TCMB        = 2.7255;
 
   // Recombination parameters
-  double Yp          = 0.24;
+  double Yp          = 0.245;
+
+  // Power-spectrum parameters
+  double A_s         = 2.1e-9;
+  double n_s         = 0.965;
+  double kpivot_mpc  = 0.05;
 
   //=========================================================================
   // Module I
@@ -72,7 +77,7 @@ int main(int argc, char **argv){
   // Module IV
   //=========================================================================
 
-  PowerSpectrum power(&cosmo, &rec, &pert);
+  PowerSpectrum power(&cosmo, &rec, &pert, A_s, n_s, kpivot_mpc);
   power.solve();
   power.output("cells.txt");
   

@@ -23,8 +23,8 @@ class PowerSpectrum {
     Perturbations *pert        = nullptr;
 
     // Parameters defining the primordial power-spectrum
-    double A_s        = 2e-9;
-    double n_s        = 0.96;
+    double A_s        = 2.1e-9;
+    double n_s        = 0.965;
     double kpivot_mpc = 0.05;
 
     // The k-values we compute Theta_ell(k) etc. for
@@ -96,7 +96,10 @@ class PowerSpectrum {
     PowerSpectrum(
         BackgroundCosmology *cosmo, 
         RecombinationHistory *rec, 
-        Perturbations *pert);
+        Perturbations *pert,
+        double A_s,
+        double n_s,
+        double kpivot_mpc);
     
     // Do all the solving: bessel functions, LOS integration and then compute Cells
     void solve();
