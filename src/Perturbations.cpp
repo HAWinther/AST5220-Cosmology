@@ -113,6 +113,10 @@ void Perturbations::integrate_perturbations(){
     // f_spline.create(x_array, k_array, f_array);
     // We can now use the spline as f_spline(x, k)
     //
+    // NB: If you use Theta_spline then you have to allocate it first,
+    // before using it e.g.
+    // Theta_spline = std::vector<Spline2D>(n_ell_theta);
+    //
     //===================================================================
     //...
     //...

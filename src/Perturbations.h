@@ -46,6 +46,8 @@ class Perturbations{
     Spline2D SE_spline{"SE_spline"};
     
     // Splines of mulipole quantities
+    // NB: If you use there you have to allocate the container first
+    // e.g. Theta_spline = std::vector<Spline2D>(n_ell_theta); before using it
     std::vector<Spline2D> Theta_spline;
     std::vector<Spline2D> Theta_p_spline;
     std::vector<Spline2D> Nu_spline;
