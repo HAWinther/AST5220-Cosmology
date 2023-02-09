@@ -3,6 +3,7 @@
 #include "RecombinationHistory.h"
 #include "Perturbations.h"
 #include "PowerSpectrum.h"
+#include "SupernovaFitting.h"
 
 int main(int argc, char **argv){
   Utils::StartTiming("Everything");
@@ -38,6 +39,9 @@ int main(int argc, char **argv){
   
   // Output background evolution quantities
   cosmo.output("cosmology.txt");
+
+  // Do the supernova fits
+  mcmc_fit_to_supernova_data("data/supernovadata.txt", "results_supernovafitting.txt");
 
   // Remove when module is completed
   return 0;
