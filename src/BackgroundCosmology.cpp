@@ -187,6 +187,25 @@ double BackgroundCosmology::get_OmegaK(double x) const{
 
   return 0.0;
 }
+    
+double BackgroundCosmology::get_luminosity_distance_of_x(double x) const{
+  //=============================================================================
+  // TODO: Implement...
+  //=============================================================================
+  //...
+  //...
+
+  return 0.0;
+}
+double BackgroundCosmology::get_comoving_distance_of_x(double x) const{
+  //=============================================================================
+  // TODO: Implement...
+  //=============================================================================
+  //...
+  //...
+
+  return 0.0;
+}
 
 double BackgroundCosmology::eta_of_x(double x) const{
   return eta_of_x_spline(x);
