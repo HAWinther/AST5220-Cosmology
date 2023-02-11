@@ -1,12 +1,28 @@
+//====================================================================================================
+//
 // Method to be used with code template to allow you to do MCMC and get constraints from supernova data
+// 
 // Things needed to be done to use this:
-// * Check that line 91-98 is how you set up your background class and do the solving
-// * Edit line 108 with the call to your luminosity function method (mine is called get_luminosity_distance_of_x). As written here this assumes that the luminosity distance is returned in meters from this method
+// * Check that line 109-116 is how you set up your background class and do the solving
+// * Edit line 124 with the call to your luminosity function method (mine is called get_luminosity_distance_of_x). 
+//   As written here this assumes that the luminosity distance is returned in meters from this method
 // * Include this file in Main.cpp: #include "SupernovaFitting.h"
 // * Call the function below in main: mcmc_fit_to_supernova_data("supernovadata.txt", "results.txt");
 //
 // The input [supernovadata] is the path to the file supernovadata.txt. The output file with all the samples is [outfile]
 // This runs for [maxsteps] steps before ending. You can reduce maxsteps or just kill the run if it takes too long
+//
+// How to analyze the resulting chains:
+// * Load the chains and skip the first few hundred samples (the burnin of the chains). E.g. loadtxt(file,skiprows=200) in python
+// * Find the minimum chi2 and the corresponding best-fit parameters (you can use np.argmin to get index of the minvalue in python)
+// * Select all samples of OmegaM and OmegaLambda (computed from OmegaM and OmegaK) that satisfy chi2 < chi2_min + 3.53 
+//   (e.g. OmegaM[chi2 < chi2min + 3.53] in python)
+// * Scatterplotting these gives you the 1sigma (68.4%) confidence region
+// * Find the standard deviation of the samples to get the 1sigma confidence region of the parameters (assuming the posterior is a gaussian)
+// * Make and plot a histogram of the samples for the different parameters (OmegaM, OmegaK, OmegaLambda, H0)
+// * You can also compute the mean and standard deviation of the chain values and use this to overplot a gaussian with the same mean and variance for comparison.
+//
+//====================================================================================================
 
 #include "Utils.h"
 #include <climits>
@@ -32,6 +48,8 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   auto read_data = [&](std::string filename){
     std::string header;
     std::ifstream fp(filename.c_str());
+    if(!fp)
+      throw std::runtime_error("Error: cannot open file " + filename);
     std::getline(fp, header);
     std::cout << "Reading luminosity data from file:\n";
     while(1){
@@ -64,8 +82,8 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   // 0: h
   // 1: OmegaM (OmegaCDM + OmegaB)
   // 2: OmegaK
-  std::array<double, nparam> parameters{0.7, 0.3, -0.5};
-  std::array<double, nparam> stepsize{0.005, 0.05, 0.05};
+  std::array<double, nparam> parameters{0.7, 0.25, 0.0};
+  std::array<double, nparam> stepsize{0.007, 0.05, 0.05};
   for(int i = 0; i < nparam; i++){
     parameters[i] = prior_low[i] + (prior_high[i]-prior_low[i])*udist(gen);
   }
@@ -85,7 +103,7 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
     if(not inside_prior) return std::numeric_limits<double>::max();
 
     //=========================================================================================
-    //======= HERE we set up the cosmology class and solve to get the distance functions ======
+    //======= Here we set up the cosmology class and solve to get the distance functions ======
     //=========================================================================================
     // Set parameters and compute background
     double param_OmegaB   = 0.05;           // Not important as we just sample and are sensitive to OmegaM = OmegaB+OmegaCDM
@@ -97,14 +115,12 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
     BackgroundCosmology cosmo(param_h, param_OmegaB, param_OmegaCDM, param_OmegaK, param_Neff, param_TCMB);
     cosmo.solve();
     //=========================================================================================
-    //=========================================================================================
-    //=========================================================================================
 
     // Compute chi^2
     double chi2 = 0.0;
     for (size_t i = 0; i < z_arr.size(); i++){
       double x = -std::log(1.0+z_arr[i]);
-      //======= HERE we call your distance function ======
+      //======= Here we call your distance function ======
       double L = cosmo.get_luminosity_distance_of_x(x) / Gpc; // Luminosity function in units of Gpc
       //==================================================
       chi2 += (L - L_arr[i]) * (L - L_arr[i]) / (dL_arr[i] * dL_arr[i]);
@@ -117,6 +133,7 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
   int nsample = 0;
   double oldchi2 = std::numeric_limits<double>::max();
   std::ofstream out(outfile.c_str());
+  out << "#          chi2            h           OmegaM           OmegaK               Acceptrate\n";
   while(nsample < maxsteps){
     steps++;
     
@@ -149,14 +166,15 @@ void mcmc_fit_to_supernova_data(std::string supernovadata_filename, std::string 
       parameters = new_parameters;
 
       // Write sample to file and screen
-      std::cout << chi2 << " ";
-      out       << chi2 << " ";
+      std::cout << "#          chi2            h           OmegaM           OmegaK               Acceptrate\n";
+      std::cout << std::setw(15) << chi2 << " ";
+      out       << std::setw(15) << chi2 << " ";
       for(int i = 0; i < nparam; i++){
-        std::cout << parameters[i] << " ";
-        out << parameters[i] << " ";
+        std::cout << std::setw(15) << parameters[i] << " ";
+        out << std::setw(15) << parameters[i] << " ";
       }
       out << "\n";
-      std::cout << " Acceptrate: " << nsample/double(steps)*100.0 << "%\n";
+      std::cout << std::setw(15) << " " << nsample/double(steps)*100.0 << "%\n";
       
       // Record new best-fit 
       if(chi2 < chi2_min){
