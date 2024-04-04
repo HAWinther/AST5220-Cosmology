@@ -52,14 +52,40 @@ Spline::Spline(const Spline& rhs){
 // Create a GSL spline
 //====================================================
 void Spline::create(
-    double *x, 
-    double *y, 
+    double *x_in, 
+    double *y_in, 
     const int nx, 
     std::string splinename, 
     const gsl_interp_type *interpoltype){
+  
+  // Pointers to the data (will be changed below if x is reversed)
+  Vector x_tmp, y_tmp;
+  double *x = x_in;
+  double *y = y_in;
  
   // Clean up if we already have a spline allocated
   if(spline) free();
+  
+  // In case x comes in reversed order deal with that here
+  // as GSL assumes x to be strictly increasing
+  const bool reversed_x = (x_in[nx-1] < x_in[0]);
+  if(reversed_x) {
+    x_tmp = Vector(nx);
+    y_tmp = Vector(nx);
+    for(int i = 0; i < nx; i++){
+      x[i] = x_in[nx-1-i];
+      y[i] = y_in[nx-1-i];
+    }
+    x = x_tmp.data();
+    y = y_tmp.data();
+  }
+
+  // Check that x is monotone
+  for(int i = 1; i < nx; i++){
+    if(x[i] <= x[i-1]){
+      throw std::runtime_error("Error creating spline. The x-array is not monotone");
+    }
+  }
 
   // Set class variables
   xmin   = x[0];
@@ -294,16 +320,64 @@ double Spline2D::operator()(double x, double y) const{
 // Create a GSL 2D spline
 //====================================================
 void Spline2D::create(
-    double *x, 
-    double *y, 
-    double *z, 
+    double *x_in, 
+    double *y_in, 
+    double *z_in, 
     const int nx, 
     const int ny, 
     std::string splinename, 
     const gsl_interp2d_type *interpoltype){
-  
+
+  // Pointers to the data (will be changed below if x and/or y is reversed)
+  Vector x_tmp, y_tmp, z_tmp;
+  double *x = x_in;
+  double *y = y_in;
+  double *z = z_in;
+
   // Clean up if we already have a spline
   if(spline) free();
+ 
+  // In case x or y comes in reversed order deal with that here
+  // as GSL assumes x and y to be strictly increasing
+  const bool reversed_x = (x_in[nx-1] < x_in[0]);
+  const bool reversed_y = (y_in[ny-1] < y_in[0]);
+  if(reversed_x){
+    x_tmp = Vector(nx);
+    for(int i = 0; i < nx; i++){
+      x_tmp[i] = x_in[nx-1-i];
+    }
+    x = x_tmp.data();
+  }
+  if(reversed_y){
+    y_tmp = Vector(ny);
+    for(int j = 0; j < ny; j++){
+      y_tmp[j] = y_in[ny-1-j];
+    }
+    y = y_tmp.data();
+  }
+  if(reversed_x or reversed_y){
+    z_tmp = Vector(nx*ny);
+    for(int i = 0; i < nx; i++){
+      int ix = reversed_x ? nx-1-i : i;
+      for(int j = 0; j < ny; j++){
+        int iy = reversed_y ? ny-1-j : j;
+        z_tmp[i + j * nx] = z_in[ix + iy * nx];
+      }
+    }
+    z = z_tmp.data();
+  }
+
+  // Check that x and y is monotone
+  for(int i = 1; i < nx; i++){
+    if(x[i] <= x[i-1]){
+      throw std::runtime_error("Error creating 2D spline. The x-array is not monotone");
+    }
+  }
+  for(int j = 1; j < ny; j++){
+    if(y[j] <= y[j-1]){
+      throw std::runtime_error("Error creating 2D spline. The y-array is not monotone");
+    }
+  }
 
   // Set class variables
   xmin   = x[0];
