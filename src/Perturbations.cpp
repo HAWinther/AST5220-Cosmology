@@ -227,14 +227,14 @@ Vector Perturbations::set_ic_after_tight_coupling(
   const double *Nu_tc           = &y_tc[Constants.ind_start_nu_tc];
 
   // References to the quantities we are going to set
-  double &delta_cdm       =  y[Constants.ind_deltacdm_tc];
-  double &delta_b         =  y[Constants.ind_deltab_tc];
-  double &v_cdm           =  y[Constants.ind_vcdm_tc];
-  double &v_b             =  y[Constants.ind_vb_tc];
-  double &Phi             =  y[Constants.ind_Phi_tc];
-  double *Theta           = &y[Constants.ind_start_theta_tc];
-  double *Theta_p         = &y[Constants.ind_start_thetap_tc];
-  double *Nu              = &y[Constants.ind_start_nu_tc];
+  double &delta_cdm       =  y[Constants.ind_deltacdm];
+  double &delta_b         =  y[Constants.ind_deltab];
+  double &v_cdm           =  y[Constants.ind_vcdm];
+  double &v_b             =  y[Constants.ind_vb];
+  double &Phi             =  y[Constants.ind_Phi];
+  double *Theta           = &y[Constants.ind_start_theta];
+  double *Theta_p         = &y[Constants.ind_start_thetap];
+  double *Nu              = &y[Constants.ind_start_nu];
 
   //=============================================================================
   // TODO: fill in the initial conditions for the full equation system below
