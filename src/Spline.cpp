@@ -73,8 +73,8 @@ void Spline::create(
     x_tmp = Vector(nx);
     y_tmp = Vector(nx);
     for(int i = 0; i < nx; i++){
-      x[i] = x_in[nx-1-i];
-      y[i] = y_in[nx-1-i];
+      x_tmp[i] = x_in[nx-1-i];
+      y_tmp[i] = y_in[nx-1-i];
     }
     x = x_tmp.data();
     y = y_tmp.data();
