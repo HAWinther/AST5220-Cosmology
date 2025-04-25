@@ -36,6 +36,7 @@ void RecombinationHistory::solve_number_density_electrons(){
   //=============================================================================
   Vector x_array;
   Vector Xe_arr;
+  Vector Xe_saha_arr;
   Vector ne_arr;
 
   // Calculate recombination history
@@ -47,6 +48,9 @@ void RecombinationHistory::solve_number_density_electrons(){
     // implement the function electron_fraction_from_saha_equation
     //==============================================================
     auto Xe_ne_data = electron_fraction_from_saha_equation(x_array[i]);
+    
+    // Store the result in Xe_saha_arr...
+    // ...
 
     // Electron fraction and number density
     const double Xe_current = Xe_ne_data.first;
@@ -59,7 +63,7 @@ void RecombinationHistory::solve_number_density_electrons(){
     if(saha_regime){
       
       //=============================================================================
-      // TODO: Store the result we got from the Saha equation
+      // TODO: Store the Saha result in Xe_arr 
       //=============================================================================
       //...
       //...
@@ -69,7 +73,7 @@ void RecombinationHistory::solve_number_density_electrons(){
       //==============================================================
       // TODO: Compute X_e from current time til today by solving 
       // the Peebles equation (NB: if you solve all in one go remember to
-      // exit the for-loop!)
+      // exit the for-loop!) 
       // Implement rhs_peebles_ode
       //==============================================================
       //...
@@ -82,7 +86,7 @@ void RecombinationHistory::solve_number_density_electrons(){
       };
       
       //=============================================================================
-      // TODO: Set up IC, solve the ODE and fetch the result 
+      // TODO: Set up IC, solve the ODE and fetch the result. Store in Xe_arr 
       //=============================================================================
       //...
       //...
@@ -91,7 +95,7 @@ void RecombinationHistory::solve_number_density_electrons(){
   }
 
   //=============================================================================
-  // TODO: Spline the result. Implement and make sure the Xe_of_x, ne_of_x 
+  // TODO: Spline the result. Implement and make sure the Xe_of_x, ne_of_x,
   // functions are working
   //=============================================================================
   //...
