@@ -73,7 +73,6 @@ void BackgroundCosmology::solve(){
 //====================================================
 
 double BackgroundCosmology::H_of_x(double x) const{
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -84,7 +83,6 @@ double BackgroundCosmology::H_of_x(double x) const{
 }
 
 double BackgroundCosmology::Hp_of_x(double x) const{
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -95,7 +93,6 @@ double BackgroundCosmology::Hp_of_x(double x) const{
 }
 
 double BackgroundCosmology::dHpdx_of_x(double x) const{
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -106,7 +103,6 @@ double BackgroundCosmology::dHpdx_of_x(double x) const{
 }
 
 double BackgroundCosmology::ddHpddx_of_x(double x) const{
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -117,8 +113,6 @@ double BackgroundCosmology::ddHpddx_of_x(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaB(double x) const{ 
-  if(x == 0.0) return OmegaB;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -129,8 +123,6 @@ double BackgroundCosmology::get_OmegaB(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaR(double x) const{ 
-  if(x == 0.0) return OmegaR;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -141,8 +133,6 @@ double BackgroundCosmology::get_OmegaR(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaNu(double x) const{ 
-  if(x == 0.0) return OmegaNu;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -153,8 +143,6 @@ double BackgroundCosmology::get_OmegaNu(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaCDM(double x) const{ 
-  if(x == 0.0) return OmegaCDM;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -165,8 +153,6 @@ double BackgroundCosmology::get_OmegaCDM(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaLambda(double x) const{ 
-  if(x == 0.0) return OmegaLambda;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================
@@ -177,8 +163,6 @@ double BackgroundCosmology::get_OmegaLambda(double x) const{
 }
 
 double BackgroundCosmology::get_OmegaK(double x) const{ 
-  if(x == 0.0) return OmegaK;
-
   //=============================================================================
   // TODO: Implement...
   //=============================================================================

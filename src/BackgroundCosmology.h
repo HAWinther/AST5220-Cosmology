@@ -13,14 +13,14 @@ class BackgroundCosmology{
     double h;                       // Little h = H0/(100km/s/Mpc)
     double OmegaB;                  // Baryon density today
     double OmegaCDM;                // CDM density today
-    double OmegaLambda;             // Dark energy density today
+    double OmegaK;                  // Curvature density 
     double Neff;                    // Effective number of relativistic species (3.046 or 0 if ignoring neutrinos)
     double TCMB;                    // Temperature of the CMB today in Kelvin
-   
+    
     // Derived parameters
     double OmegaR;                  // Photon density today (follows from TCMB)
     double OmegaNu;                 // Neutrino density today (follows from TCMB and Neff)
-    double OmegaK;                  // Curvature density = 1 - OmegaM - OmegaR - OmegaNu - OmegaLambda
+    double OmegaLambda;             // Dark energy density today 1 - OmegaM - OmegaR - OmegaNu - OmegaK
     double H0;                      // The Hubble parameter today H0 = 100h km/s/Mpc
 
     // Start and end of x-integration (can be changed)
