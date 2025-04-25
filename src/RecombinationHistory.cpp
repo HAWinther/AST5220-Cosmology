@@ -181,9 +181,10 @@ int RecombinationHistory::rhs_peebles_ode(double x, const double *Xe, double *dX
 void RecombinationHistory::solve_for_optical_depth_tau(){
   Utils::StartTiming("opticaldepth");
 
-  // Set up x-arrays to integrate over. We split into three regions as we need extra points in reionisation
+  // Set up x-arrays to integrate over 
+  // Since the IC is at x=0 (tau(0) = 0) the array should go from 0.0 -> x_start 
   const int npts = 1000;
-  Vector x_array = Utils::linspace(x_start, x_end, npts);
+  Vector x_array = Utils::linspace(0.0, x_start, npts);
 
   // The ODE system dtau/dx, dtau_noreion/dx and dtau_baryon/dx
   ODEFunction dtaudx = [&](double x, const double *tau, double *dtaudx){
