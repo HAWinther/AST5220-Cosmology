@@ -25,12 +25,6 @@ PowerSpectrum::PowerSpectrum(
 void PowerSpectrum::solve(){
 
   //=========================================================================
-  // TODO: Choose the range of k's and the resolution to compute Theta_ell(k)
-  //=========================================================================
-  Vector k_array;
-  Vector log_k_array = log(k_array);
-
-  //=========================================================================
   // TODO: Make splines for j_ell. 
   // Implement generate_bessel_function_splines
   //=========================================================================
@@ -40,13 +34,13 @@ void PowerSpectrum::solve(){
   // TODO: Line of sight integration to get Theta_ell(k)
   // Implement line_of_sight_integration
   //=========================================================================
-  line_of_sight_integration(k_array);
+  line_of_sight_integration();
 
   //=========================================================================
   // TODO: Integration to get Cell by solving dCell^f/dlogk = Delta(k) * f_ell(k)^2
   // Implement solve_for_cell
   //=========================================================================
-  auto cell_TT = solve_for_cell(log_k_array, thetaT_ell_of_k_spline, thetaT_ell_of_k_spline);
+  auto cell_TT = solve_for_cell(thetaT_ell_of_k_spline, thetaT_ell_of_k_spline);
   cell_TT_spline.create(ells, cell_TT, "Cell_TT_of_ell");
   
   //=========================================================================
@@ -95,10 +89,10 @@ void PowerSpectrum::generate_bessel_function_splines(){
 //====================================================
 
 Vector2D PowerSpectrum::line_of_sight_integration_single(
-    Vector & k_array, 
+    Vector & k_array,
     std::function<double(double,double)> &source_function){
   Utils::StartTiming("lineofsight");
-
+    
   // Make storage for the results
   Vector2D result = Vector2D(ells.size(), Vector(k_array.size()));
 
@@ -108,6 +102,7 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
     // TODO: Implement to solve for the general line of sight integral 
     // F_ell(k) = Int dx jell(k(eta-eta0)) * S(x,k) for all the ell values for the 
     // given value of k
+    // Trapezoidal rule
     //=============================================================================
     // ...
     // ...
@@ -123,11 +118,14 @@ Vector2D PowerSpectrum::line_of_sight_integration_single(
 //====================================================
 // Do the line of sight integration
 //====================================================
-void PowerSpectrum::line_of_sight_integration(Vector & k_array){
-  const int n_k        = k_array.size();
-  const int n          = 100;
+void PowerSpectrum::line_of_sight_integration(){
   const int nells      = ells.size();
   
+  //============================================================================
+  // TODO: Make linear spaced k-array with dk ~ 2pi/eta0/N where N >~ 6
+  //============================================================================
+  Vector k_array;
+
   // Make storage for the splines we are to create
   thetaT_ell_of_k_spline = std::vector<Spline>(nells);
 
@@ -167,14 +165,19 @@ void PowerSpectrum::line_of_sight_integration(Vector & k_array){
 // Cell = Int_0^inf 4 * pi * P(k) f_ell g_ell dk/k
 //====================================================
 Vector PowerSpectrum::solve_for_cell(
-    Vector & log_k_array,
     std::vector<Spline> & f_ell_spline,
     std::vector<Spline> & g_ell_spline){
   const int nells      = ells.size();
+    
+  //============================================================================
+  // TODO: Make log-spaced k-array with n = (kmax-kmin)/ dk points where
+  // dk ~ 2.0 * M_PI / eta0 / N with N >~ 32 
+  //============================================================================
+  Vector log_k_array; 
 
   //============================================================================
-  // TODO: Integrate Cell = Int 4 * pi * P(k) f_ell g_ell dk/k
-  // or equivalently solve the ODE system dCell/dlogk = 4 * pi * P(k) * f_ell * g_ell
+  // TODO: Integrate Cell = Int 4 * pi * P(k) f_ell g_ell dlog_k
+  // Trapezoidal rule
   //============================================================================
 
   // ...

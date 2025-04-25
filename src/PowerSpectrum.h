@@ -57,9 +57,9 @@ class PowerSpectrum {
     // [2] Do the line of sight integration and spline the result
     //=====================================================================
     
-    // Do LOS integration for all ells and all k's in the given k_array
+    // Do LOS integration for all ells
     // and for all the source functions (temperature, polarization, ...)
-    void line_of_sight_integration(Vector & k_array);
+    void line_of_sight_integration();
   
     // Do the line of sight integration for a single quantity
     // for all ells by providing a source_function(x,k) (can be temp, pol, ...)
@@ -80,7 +80,6 @@ class PowerSpectrum {
     // For auto spectrum (C_TT) then call with f_ell = g_ell = theta_ell
     // For polarization C_TE call with f_ell = theta_ell and g_ell = thetaE_ell
     Vector solve_for_cell(
-        Vector & logk_array,
         std::vector<Spline> & f_ell, 
         std::vector<Spline> & g_ell);
 
